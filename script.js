@@ -1,124 +1,91 @@
-console.log("Welcome to pravals music");
-let songIndex = 0;
-let audioElement = new Audio('songs/1.mp3');
-let masterplay = document.getElementById('masterplay');
-let myProgressBar = document.getElementById('myProgressBar');
-let gif = document.getElementById('gif');
-let masterSongName = document.getElementById('masterSongName');
-let songItems= Array.from(document.getElementsByClassName('songItem'));
+const apiUrl = "https://api.weatherapi.com/v1/current.json?units=metric&q=";//open weather api
+      const apiKey = "dafe91cf1f814530b8671454241405";
 
-let songs = [
-    {songName:"Papa Meri Jaan" ,filePath: "songs/1.mp3",coverPath:"covers/cover1.jpg"},
-    {songName:"Marham ",filePath: "songs/2.mp3",coverPath:"covers/cover2.jpeg"},
-    {songName:"Sari Duniya Jal" ,filePath: "songs/3.mp3",coverPath:"covers/cover3.jpg"},
-    {songName:"Satranga" ,filePath: "songs/4.mp3.mp3",coverPath:"covers/cover4.jpeg"},
-];
- 
-songItems.forEach((element, i) => {
-    let imgElement = element.querySelector("img"); // Get the first <img> element inside each songItem
-    if (imgElement) {
-        imgElement.src = songs[i].coverPath; // Set the src attribute of the <img> element
-        imgElement.alt = songs[i].songName; // Optional: Set the alt attribute for accessibility
-    }
-});
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather img");
 
-
-
- 
-
-//handle play /pause
-masterplay.addEventListener('click', ()=>{
-    if(audioElement.paused || audioElement.currentTime<=0){
-        audioElement.play();
-        masterplay.classList.remove('fa-play-circle');
-        masterplay.classList.add('fa-pause-circle');
-        gif.style.opacity = '1';
-    }
-    else{ audioElement.pause();
-        masterplay.classList.remove('fa-pause-circle');
-        masterplay.classList.add('fa-play-circle');
-        gif.style.opacity = '0';
-    }
-});
-// audioElement.play();
-
-//listen to event
-audioElement.addEventListener('timeupdate', ()=>{
-    console.log('timeupdate');
-    //update the progress bar
-    progress = parseInt((audioElement.currentTime/audioElement.duration)*100);
-    myProgressBar.value = progress;
-
-})
-myProgressBar.addEventListener('change', ()=>{
-    audioElement.currentTime = myProgressBar.value*audioElement.duration/100;
-})
-
-
-const makeAllPlays = () => {
-    Array.from(document.getElementsByClassName('songItemPlay')).forEach((element) => {
-        element.classList.remove('fa-pause-circle');
-        element.classList.add('fa-play-circle');
-    });
-};
-
-Array.from(document.getElementsByClassName('songItemsPlay')).forEach((element) => {
-    element.addEventListener('click', (e) => {
-        console.log(e.target);
-
-        makeAllPlays(); // Call the function to set all elements to play icon
+      async function checkWeather(city) {
+    try {
+        const response = await fetch(apiUrl + city + `&key=${apiKey}`);
         
-        let songIndex = parseInt(e.target.id); // Assuming the 'id' attribute holds the songIndex
-
-        if (audioElement.paused || audioElement.currentTime <= 0) {
-            audioElement.src = `songs/${songIndex + 1}.mp3`;
-            masterSongName.innerText = songs[songIndex].songName;
-            audioElement.play();
-            gif.style.opacity = '1';
-            e.target.classList.remove('fa-play-circle');
-            e.target.classList.add('fa-pause-circle');
-            masterplay.classList.remove('fa-play-circle');
-            masterplay.classList.add('fa-pause-circle');
+        if (response.status === 404) {
+            document.querySelector(".error").style.display = "block";
+            document.querySelector(".weather").style.display = "none";
         } else {
-            audioElement.pause();
-            gif.style.opacity = '0';
-            e.target.classList.remove('fa-pause-circle');
-            e.target.classList.add('fa-play-circle');
-            masterplay.classList.remove('fa-pause-circle');
-            masterplay.classList.add('fa-play-circle');
+            const data = await response.json();
+
+            document.querySelector(".city").innerHTML = data.location.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.current.temp_c) + "°C";
+            document.querySelector(".humidity").innerHTML = data.current.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.current.wind_kph + "Km/h";
+            
+            const condition = data.current.condition.text.toLowerCase();
+
+            if (condition === "sunny") {
+                weatherIcon.src = "images/sunny.png";
+            } else if (condition === "cloudy") {
+                weatherIcon.src = "images/cloudy.jpeg";
+            } else if (condition === "rainy") {
+                weatherIcon.src = "images/5 rain.png";
+            } else if (condition === "mist") {
+                weatherIcon.src = "images/mist.png";
+            } else if (condition === "partly cloudy") {
+                weatherIcon.src = "images/partly cloud.png";
+            } else if (condition === "foggy") {
+                weatherIcon.src = "images/foggy.png";
+            } else if (condition === "snowy") {
+                weatherIcon.src = "images/snowy.png";
+            } else if (condition === "stormy") {
+                weatherIcon.src = "images/stormy.png";
+            } else if (condition === "chilly") {
+                weatherIcon.src = "images/chilly.png";
+            } else if (condition === "overcast") {
+                weatherIcon.src = "images/overcast.png";
+            } else if (condition === "clear") {
+                weatherIcon.src = "images/clear.jpeg";
+            }
+
+            document.querySelector(".weather").style.display = "block";
+            document.querySelector(".error").style.display = "none";
+            console.log(condition);
         }
-    });        
+    } catch (error) {
+        console.error("Error fetching the weather data:", error);
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+    }
+}
 
-document.getElementById('next').addEventListener('click', ()=>{
-    if(songIndex>=4){
-        songIndex=0;
-    }
-    else{
-        songIndex += 1;
-    }
-    audioElement.src = `songs/${songIndex+1}.mp3`;
-    masterSongName.innerText =songs[songIndex].songName;
-    audioElement.currentTime = 0;
-    audioElement.play();
-    gif.style.opacity = '1';
-    masterplay.classList.remove('fa-play-circle');
-    masterplay.classList.add('fa-pause-circle');
-})
 
-document.getElementById('previous').addEventListener('click', ()=>{
-    if(songIndex<=0){
-        songIndex=0;
-    }
-    else{
-        songIndex -= 1;
-    }
-    audioElement.src = `songs/${songIndex+1}.mp3`;
-    masterSongName.innerText =songs[songIndex].songName;
+      searchBtn.addEventListener("click", () => {
+        checkWeather(searchBox.value);
+      });
+        
+       
+      
+     
+
+function updateTimeAndDate() {
+    const now = new Date();
     
-    audioElement.currentTime = 0;
-    audioElement.play();
-    gif.style.opacity = '1';
-    masterplay.classList.remove('fa-play-circle');
-    masterplay.classList.add('fa-pause-circle');
-})
-})
+    // Format date
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = now.toLocaleDateString(undefined, dateOptions);
+    
+    // Format time
+    const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const formattedTime = now.toLocaleTimeString(undefined, timeOptions);
+    
+    // Update HTML
+    document.getElementById('date').textContent = formattedDate;
+    document.getElementById('time').textContent = formattedTime;
+}
+
+
+
+// Update date and time immediately
+updateTimeAndDate();
+
+// Update date and time every second
+setInterval(updateTimeAndDate, 1000);
