@@ -1,0 +1,30 @@
+.flex{
+    display:flex;
+   
+}
+.items-center{
+    align-items: center;
+}
+.justify-center{
+    justify-content: center;
+    
+}
+.uppercase{
+   text-transform: uppercase;
+   font-weight: bold; 
+}
+.flex-wrap{
+    flex-wrap: wrap;
+    
+}
+
+
+
+/* <div class="rightBox">
+<div class="profile mx-2">Profile</div>
+<!-- <img src="images/profile.jpg"> -->
+<div class="wishlist mx-2">Wishlist</div>
+<!-- <img src="images/whishlist.png"> -->
+<div class="bag mx-2">Bag</div>
+<!-- <img src="images/bag.png"> -->
+</div> */
