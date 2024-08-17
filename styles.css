@@ -1,0 +1,98 @@
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #4facfe, #00f2fe);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Calculator Container */
+.calculator {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+}
+
+.calculator h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #333;
+    border-bottom: 2px solid #00b4d8;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* Input Fields */
+.calculator label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+    font-weight: bold;
+}
+
+.calculator input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.calculator input:focus {
+    border-color: #00b4d8;
+    box-shadow: 0 0 8px rgba(0, 180, 216, 0.3);
+    outline: none;
+}
+
+/* Button */
+.calculator button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00b4d8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.calculator button:hover {
+    background-color: #0077b6;
+    transform: translateY(-2px);
+}
+
+.calculator button:active {
+    transform: translateY(1px);
+}
+
+/* Result Display */
+#result {
+    margin-top: 25px;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+#result.show {
+    opacity: 1;
+}

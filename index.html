@@ -1,51 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PRAVAL KUMAR PORTFOLIO</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI Calculator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
-    <Div class="container">
-        <div  class="sidebar sidebarGo">
-           
-            <nav>
-                <ul>
-                   <li><a href="/"><a href="/">Home</a></li>
-                   <li><a href="intro.html">My Intro</a></li>
-                   <li><a href="/service.html">Services</a></li> 
-                   <li><a href="blog.html">Blog</a></li>
-                   <li><a href="/contact.html">Contact Me</a> </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="main">
-            <div class="hamburger">
-                <div class="ham">
-                    <img src="images/ham.png" alt=" " width="23px">
-                </div>
-                <div class="cross">
-                    <img src="images/cross.png" alt=" " width="23px">
-                </div>
-            </div>
-            
-            
-            <div class="infocontainer">
-            <div class="devinfor">
-            <div class ="hello" >Hi I am </div>
-            <div class ="name" >Praval Kumar</div>
-            <div class ="about">Developer</div>
-            <a href="cv.txt" target="_blank">
+  <div class="calculator">
+    <h2>BMI Calculator</h2>
+    <label for="weight">Weight (kg):</label>
+    <input id="weight" type="number" required placeholder="Enter your weight" />
 
-            <button class="button" >Download CV</button></a>
-            <a href ="contact .html" button class="button">Contact Me</button></a>
-           
-        </div>
-        
-        <div class="devPic"><img src="images/dev.jpg" alt="praval kumar"</div>
-    </div>
-    </div>
-    </div>
-    <script src="script.js"></script>
+    <label for="height">Height (cm):</label>
+    <input id="height" type="number" required placeholder="Enter your height" />
+
+    <button onclick="calculateBMI()">Calculate BMI</button>
+
+    <div id="result"></div>
+  </div>
+  
+  <script src="script.js"></script>
 </body>
 </html>
